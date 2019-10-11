@@ -188,7 +188,7 @@ function init (options) {
   // Import aliases
   //
 
-  var aliases = npmPackage._moduleAliases || {}
+  var aliases = npmPackage._moduleAliases || npmPackage.moduleAliases || {}
 
   for (var alias in aliases) {
     if (aliases[alias][0] !== '/') {
@@ -202,8 +202,10 @@ function init (options) {
   // Register custom module directories (like node_modules)
   //
 
-  if (npmPackage._moduleDirectories instanceof Array) {
-    npmPackage._moduleDirectories.forEach(function (dir) {
+  var directories = npmPackage._moduleDirectories || npmPackage.moduleDirectories
+
+  if (directories instanceof Array) {
+    directories.forEach(function (dir) {
       if (dir === 'node_modules') return
 
       var modulePath = nodePath.join(base, dir)
